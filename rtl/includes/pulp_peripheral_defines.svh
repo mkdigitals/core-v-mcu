@@ -18,8 +18,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-`define BUILD_DATE 32'h20230725
-`define BUILD_TIME 32'h00053430
+`define BUILD_DATE 32'h20230731
+`define BUILD_TIME 32'h00041423
 
 //  PER_ID definitions
 `define PER_ID_UART      0
@@ -29,13 +29,12 @@
 `define PER_ID_CSI2      6
 `define PER_ID_HYPER     6
 `define PER_ID_SDIO      6
-`define PER_ID_CAM       7
-`define PER_ID_JTAG      8
-`define PER_ID_MRAM      8
-`define PER_ID_FILTER    8
-`define PER_ID_FPGA      9
-`define PER_ID_ETH       9
-`define PER_ID_EXT_PER   10
+`define PER_ID_JTAG      7
+`define PER_ID_MRAM      7
+`define PER_ID_FILTER    7
+`define PER_ID_FPGA      8
+`define PER_ID_ETH       8
+`define PER_ID_EXT_PER   9
 
 //  UDMA TX channels
 `define CH_ID_TX_UART    0
@@ -77,18 +76,16 @@
 `define CH_ID_RX_HYPER   6
 `define CH_ID_RX_HYPER   6
 `define CH_ID_RX_HYPER0  6
-`define CH_ID_CAM        7
-`define CH_ID_CAM0       7
-`define CH_ID_RX_JTAG    8
-`define CH_ID_RX_MRAM    8
-`define CH_ID_RX_FPGA    8
-`define CH_ID_RX_ETH     8
-`define CH_ID_RX_ETH0    8
-`define CH_ID_RX_EXT_PER 9
+`define CH_ID_RX_JTAG    7
+`define CH_ID_RX_MRAM    7
+`define CH_ID_RX_FPGA    7
+`define CH_ID_RX_ETH     7
+`define CH_ID_RX_ETH0    7
+`define CH_ID_RX_EXT_PER 8
 
 //  Number of channels
 `define N_TX_CHANNELS  10
-`define N_RX_CHANNELS  9
+`define N_RX_CHANNELS  8
 
 //  Define indices for sysio in IO bus
 `define IOINDEX_JTAG_TCK_I            0
@@ -98,23 +95,26 @@
 `define IOINDEX_JTAG_TRST_I           4
 `define IOINDEX_REF_CLK_I             5
 `define IOINDEX_RSTN_I                6
-`define IOINDEX_ETH_REFCLK_O          7
-`define IOINDEX_ETH_RSTN_O            8
-`define IOINDEX_ETH_CRS_DV_I          9
-`define IOINDEX_ETH_RX_ER_I           10
-`define IOINDEX_ETH_RXD0_I            11
-`define IOINDEX_ETH_RXD1_I            12
-`define IOINDEX_ETH_TX_EN_O           13
-`define IOINDEX_ETH_TXD0_O            14
-`define IOINDEX_ETH_TXD1_O            15
-`define IOINDEX_LD_REF_CLK_LOCK_O     16
-`define IOINDEX_LD_REF_CLK_BLINK_O    17
-`define IOINDEX_LD_ETH_CLK_LOCK_O     18
-`define IOINDEX_LD_ETH_CLK_BLINK_O    19
-`define IOINDEX_STM_I                 57
-`define IOINDEX_BOOTSEL_I             58
+`define IOINDEX_LD_REF_CLK_LOCK_O     7
+`define IOINDEX_LD_REF_CLK_BLINK_O    8
+`define IOINDEX_LD_ETH_CLK_LOCK_O     9
+`define IOINDEX_LD_ETH_CLK_BLINK_O    10
+`define IOINDEX_PHY_RX_CLK_I          11
+`define IOINDEX_PHY_RXD[0]_I          12
+`define IOINDEX_PHY_TX_CLK_O          13
+`define IOINDEX_PHY_TXD[0]_O          14
+`define IOINDEX_PHY_RX_CTL_I          15
+`define IOINDEX_PHY_TX_CTL_O          16
+`define IOINDEX_PHY_RXD[1]_I          17
+`define IOINDEX_PHY_RXD[2]_I          18
+`define IOINDEX_PHY_RXD[3]_I          19
+`define IOINDEX_PHY_TXD[1]_O          20
+`define IOINDEX_PHY_TXD[2]_O          21
+`define IOINDEX_PHY_TXD[3]_O          22
+`define IOINDEX_STM_I                 23
+`define IOINDEX_BOOTSEL_I             24
 //  Width of perio bus
-`define N_PERIO  47
+`define N_PERIO  36
 
 //  define index locations in perio bus
 `define PERIO_UART_NPORTS 2
@@ -160,18 +160,6 @@
 `define PERIO_SDIO0_DATA1 33
 `define PERIO_SDIO0_DATA2 34
 `define PERIO_SDIO0_DATA3 35
-`define PERIO_CAM_NPORTS 11
-`define PERIO_CAM0_CLK   36
-`define PERIO_CAM0_VSYNC 37
-`define PERIO_CAM0_HSYNC 38
-`define PERIO_CAM0_DATA0 39
-`define PERIO_CAM0_DATA1 40
-`define PERIO_CAM0_DATA2 41
-`define PERIO_CAM0_DATA3 42
-`define PERIO_CAM0_DATA4 43
-`define PERIO_CAM0_DATA5 44
-`define PERIO_CAM0_DATA6 45
-`define PERIO_CAM0_DATA7 46
 `define PERIO_JTAG_NPORTS 0
 `define PERIO_MRAM_NPORTS 0
 `define PERIO_FILTER_NPORTS 0

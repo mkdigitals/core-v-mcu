@@ -238,6 +238,7 @@ if args.soc_defines != None:
             pin_num = -2
             for pin in pin_table:
                 pin_num = pin_num + 1
+                print(pin_num)
                 if pin_num >= 0:
                     # Work to do
                     io_num = int(pin[2])
@@ -1001,7 +1002,17 @@ if args.xilinx_core_v_mcu_sv != None:
         x_sv.write("    inout wire [`N_IO-1:0]  xilinx_io,\n")
         x_sv.write("    input wire  sysclk_p,\n")
         x_sv.write("    input wire  sysclk_n,\n")
-        x_sv.write("    input wire  ref_clk\n")
+        x_sv.write("    input wire  ref_clk,\n")
+        x_sv.write("    input wire         phy_rx_clk,\n")
+        x_sv.write("    input wire [3:0]   phy_rxd,\n")
+        x_sv.write("    input wire         phy_rx_ctl,\n")
+        x_sv.write("    output wire        phy_tx_clk,\n")
+        x_sv.write("    output wire [3:0]  phy_txd,\n")
+        x_sv.write("    output wire        phy_tx_ctl,\n")
+        x_sv.write("    output wire        phy_reset_n,\n")
+        x_sv.write("    input wire         phy_int_n,\n")
+        x_sv.write("    input wire         phy_pme_n,\n")
+        x_sv.write("    output wire        phy_gmii_tx_en\n")
         x_sv.write("  );\n")
         x_sv.write("\n")
         x_sv.write("  wire private_net;\n")
@@ -1011,26 +1022,23 @@ if args.xilinx_core_v_mcu_sv != None:
         x_sv.write("  wire [`N_IO-1:0]  s_io_in;\n")
         x_sv.write("  wire [`N_IO-1:0][`NBIT_PADCFG-1:0] s_pad_cfg;\n")
         for ionum in range(N_IO):
-            if sysionames[ionum] != -1:
-                 x_sv.write("  wire s_%s;\n" %(sysionames[ionum][:-2]))
+            if (sysionames[ionum] != -1 and 'phy' not in sysionames[ionum][:-2]):
+                x_sv.write("  wire s_%s;\n" %(sysionames[ionum][:-2]))
         x_sv.write("\n")
 
         ionum_start = 0
         ionum_end = -1
         for ionum in range(N_IO):
-            if (sysionames[ionum] != "ref_clk_i" and
+            if (
+                sysionames[ionum] != "ref_clk_i" and
                 sysionames[ionum] != "jtag_tck_i" and
                 sysionames[ionum] != "jtag_tdo_o" and
-                sysionames[ionum] != "eth_refclk_o" and
-                sysionames[ionum] != "eth_rstn_o" and
-                sysionames[ionum] != "eth_tx_en_o" and
-                sysionames[ionum] != "eth_txd0_o" and
-                sysionames[ionum] != "eth_txd1_o" and
                 sysionames[ionum] != "ld_ref_clk_lock_o" and
                 sysionames[ionum] != "ld_ref_clk_blink_o" and
                 sysionames[ionum] != "ld_eth_clk_lock_o" and
                 sysionames[ionum] != "ld_eth_clk_blink_o" and
-                sysionames[ionum] != "sysclk_p_i") :
+                sysionames[ionum] != "sysclk_p_i"):
+
                 if sysionames[ionum] == "bootsel_i" or sysionames[ionum] == "stm_i" :
                     x_sv.write("  pad_functional_pd i_pad_%d   (.OEN(~s_io_oe[%d]), .I(s_io_out[%d]), .O(s_io_in[%d]), .PAD(xilinx_io[%d]), .PEN(~s_pad_cfg[%d][0]));\n" %\
                         (ionum, ionum, ionum, ionum, ionum, ionum))
@@ -1038,27 +1046,16 @@ if args.xilinx_core_v_mcu_sv != None:
                     x_sv.write("  IBUF rstn_buf (\n")
                     x_sv.write("    .I(xilinx_io[%d]), .O(s_io_in[%d]));\n" % (ionum,ionum))
                 else :
-                    x_sv.write("  pad_functional_pu i_pad_%d   (.OEN(~s_io_oe[%d]), .I(s_io_out[%d]), .O(s_io_in[%d]), .PAD(xilinx_io[%d]), .PEN(~s_pad_cfg[%d][0]));\n" %\
-                        (ionum, ionum, ionum, ionum, ionum, ionum))
+                    if (sysionames[ionum] != -1 and 'phy' in sysionames[ionum][:-2]):
+                        print(sysionames[ionum][:-2])
+                    else:
+                        x_sv.write("  pad_functional_pu i_pad_%d   (.OEN(~s_io_oe[%d]), .I(s_io_out[%d]), .O(s_io_in[%d]), .PAD(xilinx_io[%d]), .PEN(~s_pad_cfg[%d][0]));\n" %\
+                            (ionum, ionum, ionum, ionum, ionum, ionum))
+                    
             else:                       # break in sequence
                 if sysionames[ionum] == "jtag_tdo_o" :
                     x_sv.write("  pad_functional_pu i_pad_%d   (.OEN(~s_io_oe[%d]), .I(s_jtag_tdo), .O(s_io_in[%d]), .PAD(xilinx_io[%d]), .PEN(~s_pad_cfg[%d][0]));\n" %\
                     (ionum, ionum, ionum, ionum, ionum))
-                if sysionames[ionum] == "eth_refclk_o" :
-                    x_sv.write("  assign xilinx_io[%d] = s_eth_refclk;\n" %\
-                    (ionum))
-                if sysionames[ionum] == "eth_rstn_o" :
-                    x_sv.write("  assign xilinx_io[%d] = s_eth_rstn;\n" %\
-                    (ionum))
-                if sysionames[ionum] == "eth_tx_en_o" :
-                    x_sv.write("  assign xilinx_io[%d] = s_eth_tx_en;\n" %\
-                    (ionum))
-                if sysionames[ionum] == "eth_txd0_o" :
-                    x_sv.write("  assign xilinx_io[%d] = s_eth_txd0;\n" %\
-                    (ionum))    
-                if sysionames[ionum] == "eth_txd1_o" :
-                    x_sv.write("  assign xilinx_io[%d] = s_eth_txd1;\n" %\
-                    (ionum))    
                 if sysionames[ionum] == "ld_ref_clk_lock_o" :
                     x_sv.write("  assign xilinx_io[%d] = s_ld_ref_clk_lock;\n" %\
                     (ionum))
@@ -1070,7 +1067,7 @@ if args.xilinx_core_v_mcu_sv != None:
                     (ionum))
                 if sysionames[ionum] == "ld_eth_clk_blink_o" :
                     x_sv.write("  assign xilinx_io[%d] = s_ld_eth_clk_blink;\n" %\
-                    (ionum))                                                                            
+                    (ionum))
                 if sysionames[ionum] == "ref_clk_i":
                     x_sv.write("  // Input clock buffer\n")
                     x_sv.write("  IBUFG #(\n")
@@ -1112,14 +1109,14 @@ if args.xilinx_core_v_mcu_sv != None:
                     x_sv.write("  );\n\n")
 
         for ionum in range(N_IO):
-            if sysionames[ionum] != -1:
+            if sysionames[ionum] != -1 and 'phy' not in sysionames[ionum][:-2]:
                 if sysio[sysionames[ionum][:-2]] == 'input':
                     x_sv.write("      assign s_%s = s_io_in[%d];\n" % (sysionames[ionum][:-2], ionum))
                 elif sysio[sysionames[ionum][:-2]] == 'snoop':
                     x_sv.write("      assign s_%s = s_io_in[%d];\n" % (sysionames[ionum][:-2], ionum))
         x_sv.write("  core_v_mcu i_core_v_mcu (\n")
         for ionum in range(N_IO):
-            if sysionames[ionum] != -1:
+            if sysionames[ionum] != -1 and 'phy' not in sysionames[ionum][:-2]:
                 if sysionames[ionum] == "ref_clk_i" or sysionames[ionum] == "sysclk_p_i" :
                     x_sv.write("    .ref_clk_i(private_net),\n")
                 else :
@@ -1128,7 +1125,17 @@ if args.xilinx_core_v_mcu_sv != None:
         x_sv.write("    .io_out_o(s_io_out),\n")
         x_sv.write("    .io_oe_o(s_io_oe),\n")
         x_sv.write("    .io_in_i(s_io_in),\n")
-        x_sv.write("    .pad_cfg_o(s_pad_cfg)\n")
+        x_sv.write("    .pad_cfg_o(s_pad_cfg,)\n")
+        x_sv.write("    .phy_rx_clk(phy_rx_clk),\n")
+        x_sv.write("    .phy_rxd(phy_rxd),\n")
+        x_sv.write("    .phy_rx_ctl(phy_rx_ctl),\n")
+        x_sv.write("    .phy_tx_clk(phy_tx_clk),\n")
+        x_sv.write("    .phy_txd(phy_txd),\n")
+        x_sv.write("    .phy_tx_ctl(phy_tx_ctl),\n")
+        x_sv.write("    .phy_reset_n(phy_reset_n),\n")
+        x_sv.write("    .phy_int_n(phy_int_n),\n")
+        x_sv.write("    .phy_pme_n(phy_pme_n),\n")
+        x_sv.write("    .phy_gmii_tx_en(phy_gmii_tx_en)\n")
         x_sv.write("  );\n")
         x_sv.write("endmodule\n")
 
@@ -1152,7 +1159,11 @@ if args.input_xdc != None:
                     if elements[10] == "CLK100MHZ" :
                         elements[10] = "ref_clk"
                     else :
-                        elements[10] = "xilinx_io[" + str(xilinx_names.index(elements[10])) + "]"
+                        if('phy' in str(sysionames[xilinx_names.index(elements[10])])) :
+                            print(sysionames[xilinx_names.index(elements[10])][:-2])
+                            elements[10] = sysionames[xilinx_names.index(elements[10])][:-2]
+                        else :
+                            elements[10] = "xilinx_io[" + str(xilinx_names.index(elements[10])) + "]"
                     elements[0] = elements[0][1:]
                     output_xdc.write(' '.join(elements) + "\n")
                 elif len(elements) > 1 and elements[0] == "#create_clock" and elements[11] in xilinx_names:

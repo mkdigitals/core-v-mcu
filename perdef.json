@@ -39,42 +39,6 @@
 	  "type": "sysio",
 	  "direction": "input"
 	},
-	{ "name": "eth_refclk",
-	  "type": "sysio",
-	  "direction": "output"
-	},
-	{ "name": "eth_rstn",
-	"type": "sysio",
-	"direction": "output"
-	},
-	{ "name": "eth_crs_dv",
-	  "type": "sysio",
-	  "direction": "input"
-	},
-	{ "name": "eth_rx_er",
-	  "type": "sysio",
-	  "direction": "input"
-	},
-	{ "name": "eth_rxd0",
-	  "type": "sysio",
-	  "direction": "input"
-	},
-	{ "name": "eth_rxd1",
-	  "type": "sysio",
-	  "direction": "input"
-	},
-	{ "name": "eth_tx_en",
-	  "type": "sysio",
-	  "direction": "output"
-	},
-	{ "name": "eth_txd0",
-	  "type": "sysio",
-	  "direction": "output"
-	},
-	{ "name": "eth_txd1",
-	  "type": "sysio",
-	  "direction": "output"
-	},
 	{ "name": "ld_ref_clk_lock",
 	  "type": "sysio",
 	  "direction": "output"
@@ -87,7 +51,68 @@
 	  "type": "sysio",
 	  "direction": "output"
 	},
+	
 	{ "name": "ld_eth_clk_blink",
+	  "type": "sysio",
+	  "direction": "output"
+	},
+
+	{ "name": "phy_rx_clk",
+	  "type": "sysio",
+	  "direction": "input"
+	},
+
+	{ "name": "phy_rxd[0]",
+	  "type": "sysio",
+	  "direction": "input"
+	},
+
+	{ "name": "phy_rxd[1]",
+	  "type": "sysio",
+	  "direction": "input"
+	},
+
+	{ "name": "phy_rxd[2]",
+	  "type": "sysio",
+	  "direction": "input"
+	},
+
+	{ "name": "phy_rxd[3]",
+	  "type": "sysio",
+	  "direction": "input"
+	},
+
+	{ "name": "phy_rx_ctl",
+	  "type": "sysio",
+	  "direction": "input"
+	},
+
+	{ "name": "phy_tx_clk",
+	  "type": "sysio",
+	  "direction": "output"
+	},
+
+	{ "name": "phy_txd[0]",
+	  "type": "sysio",
+	  "direction": "output"
+	},
+
+	{ "name": "phy_txd[1]",
+	  "type": "sysio",
+	  "direction": "output"
+	},
+
+	{ "name": "phy_txd[2]",
+	  "type": "sysio",
+	  "direction": "output"
+	},
+
+	{ "name": "phy_txd[3]",
+	  "type": "sysio",
+	  "direction": "output"
+	},
+
+	{ "name": "phy_tx_ctl",
 	  "type": "sysio",
 	  "direction": "output"
 	},
@@ -170,24 +195,6 @@
 	  },
 	  "udma_tx": ["tx_hyper" ],
 	  "udma_rx": ["rx_hyper" ]
-	},
-	{ "name": "cam",
-	  "usable":	true,
-	  "type":		"udma",
-	  "ports": {
-		  "clk"	: "input",
-		  "vsync"	: "input",
-		  "hsync"	: "input",
-		  "data0"	: "input",
-		  "data1"	: "input",
-		  "data2"	: "input",
-		  "data3"	: "input",
-		  "data4"	: "input",
-		  "data5"	: "input",
-		  "data6"	: "input",
-		  "data7"	: "input"
-	  },
-	  "udma_rx": ["cam" ]
 	},
 	{ "name": "jtag",
 	  "usable":	false,

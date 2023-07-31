@@ -246,25 +246,30 @@ The memory map of the **Debug** region of the Peripheral Domain is documented as
 | IO_4 | jtag_trst |  |  |  |  |
 | IO_5 | ref_clk |  |  |  |  |
 | IO_6 | rstn |  |  |  |  |
-| IO_7 | eth_refclk |  |  |  |  |
-| IO_8 | eth_rstn |  |  |  |  |
-| IO_9 | eth_crs_dv |  |  |  |  |
-| IO_10 | eth_rx_er |  |  |  |  |
-| IO_11 | eth_rxd0 |  |  |  |  |
-| IO_12 | eth_rxd1 |  |  |  |  |
-| IO_13 | eth_tx_en |  |  |  |  |
-| IO_14 | eth_txd0 |  |  |  |  |
-| IO_15 | eth_txd1 |  |  |  |  |
-| IO_16 | ld_ref_clk_lock |  |  |  |  |
-| IO_17 | ld_ref_clk_blink |  |  |  |  |
-| IO_18 | ld_eth_clk_lock |  |  |  |  |
-| IO_19 | ld_eth_clk_blink |  |  |  |  |
-| IO_20 |  | uart0_rx |  | apbio_0 | fpgaio_0 |
-| IO_21 |  | uart0_tx |  | apbio_1 | fpgaio_1 |
-| IO_22 |  | uart1_tx |  | apbio_2 | fpgaio_2 |
-| IO_23 |  | uart1_rx |  | apbio_3 | fpgaio_3 |
-| IO_24 |  | apbio_32 | apbio_47 | apbio_4 | fpgaio_4 |
-| IO_25 |  | apbio_0 |  | apbio_5 | fpgaio_5 |
+| IO_7 | ld_ref_clk_lock |  |  |  |  |
+| IO_8 | ld_ref_clk_blink |  |  |  |  |
+| IO_9 | ld_eth_clk_lock |  |  |  |  |
+| IO_10 | ld_eth_clk_blink |  |  |  |  |
+| IO_11 | phy_rx_clk |  |  |  |  |
+| IO_12 | phy_rxd[0] |  |  |  |  |
+| IO_13 | phy_tx_clk |  |  |  |  |
+| IO_14 | phy_txd[0] |  |  |  |  |
+| IO_15 | phy_rx_ctl |  |  |  |  |
+| IO_16 | phy_tx_ctl |  |  |  |  |
+| IO_17 | phy_rxd[1] |  |  |  |  |
+| IO_18 | phy_rxd[2] |  |  |  |  |
+| IO_19 | phy_rxd[3] |  |  |  |  |
+| IO_20 | phy_txd[1] |  |  |  |  |
+| IO_21 | phy_txd[2] |  |  |  |  |
+| IO_22 | phy_txd[3] |  |  |  |  |
+| IO_23 | stm |  |  |  |  |
+| IO_24 | bootsel |  |  |  | fpgaio_37 |
+| IO_25 |  | uart0_rx |  | apbio_0 | fpgaio_0 |
+| IO_26 |  | uart0_tx |  | apbio_1 | fpgaio_1 |
+| IO_27 |  | uart1_tx |  | apbio_2 | fpgaio_2 |
+| IO_28 |  | uart1_rx |  | apbio_3 | fpgaio_3 |
+| IO_29 |  | apbio_32 | apbio_47 | apbio_4 | fpgaio_4 |
+| IO_30 |  | apbio_0 |  | apbio_5 | fpgaio_5 |
 | Jxadc[1] |  | qspim0_csn0 | apbio_34 | apbio_6 | fpgaio_6 |
 | Jxadc[2] |  | qspim0_data0 | apbio_35 | apbio_7 | fpgaio_7 |
 | Jxadc[3] |  | qspim0_data1 | apbio_37 | apbio_8 | fpgaio_8 |
@@ -273,33 +278,17 @@ The memory map of the **Debug** region of the Peripheral Domain is documented as
 | Jxadc[8] |  | apbio_2 | apbio_41 | apbio_11 | fpgaio_11 |
 | Jxadc[9] |  | qspim0_data2 | apbio_42 | apbio_12 | fpgaio_12 |
 | Jxadc[10] |  | qspim0_data3 | apbio_43 | apbio_13 | fpgaio_13 |
-| IO_34 |  | cam0_vsync | apbio_36 | apbio_14 | fpgaio_14 |
-| IO_35 |  | cam0_hsync | apbio_39 | apbio_15 | fpgaio_15 |
-| IO_36 |  | i2cm0_scl |  | apbio_16 | fpgaio_16 |
-| IO_37 |  | i2cm0_sda |  | apbio_17 | fpgaio_17 |
-| IO_38 |  | cam0_clk | apbio_33 | apbio_18 | fpgaio_18 |
-| IO_39 |  | apbio_32 | qspim0_csn1 | apbio_19 | fpgaio_19 |
-| IO_40 |  | apbio_48 | qspim0_csn2 | apbio_20 | fpgaio_20 |
-| IO_41 |  | apbio_49 | qspim0_csn3 | apbio_21 | fpgaio_21 |
-| IO_42 |  | cam0_data0 | qspim1_csn0 | apbio_22 | fpgaio_22 |
-| IO_43 |  | cam0_data1 | qspim1_data0 | apbio_23 | fpgaio_23 |
-| IO_44 |  | cam0_data2 | qspim1_data1 | apbio_24 | fpgaio_24 |
-| IO_45 |  | cam0_data3 | qspim1_clk | apbio_25 | fpgaio_25 |
-| IO_46 |  | cam0_data4 | qspim1_csn1 | apbio_26 | fpgaio_26 |
-| IO_47 |  | cam0_data5 | qspim1_csn2 | apbio_27 | fpgaio_27 |
-| IO_48 |  | cam0_data6 | qspim1_data2 | apbio_28 | fpgaio_28 |
-| IO_49 |  | cam0_data7 | qspim1_data3 | apbio_29 | fpgaio_29 |
-| IO_50 |  | sdio0_data3 |  | apbio_30 | fpgaio_30 |
-| IO_51 |  | sdio0_cmd |  | apbio_31 | fpgaio_31 |
-| IO_52 |  | sdio0_data0 |  | apbio_32 | fpgaio_32 |
-| IO_53 |  | sdio0_clk |  | apbio_43 | fpgaio_33 |
-| IO_54 |  | sdio0_data1 |  | apbio_44 | fpgaio_34 |
-| IO_55 |  | sdio0_data2 |  | apbio_45 | fpgaio_35 |
-| IO_56 |  | apbio_50 | apbio_0 | apbio_46 | fpgaio_36 |
-| IO_57 | stm |  |  |  |  |
-| IO_58 | bootsel |  |  |  | fpgaio_37 |
-| IO_59 |  | i2cm1_scl |  |  | fpgaio_38 |
-| IO_60 |  | i2cm1_sda |  |  | fpgaio_39 |
+| IO_39 |  | i2cm0_scl |  | apbio_16 | fpgaio_16 |
+| IO_40 |  | i2cm0_sda |  | apbio_17 | fpgaio_17 |
+| IO_41 |  | sdio0_data3 |  | apbio_30 | fpgaio_30 |
+| IO_42 |  | sdio0_cmd |  | apbio_31 | fpgaio_31 |
+| IO_43 |  | sdio0_data0 |  | apbio_32 | fpgaio_32 |
+| IO_44 |  | sdio0_clk |  | apbio_43 | fpgaio_33 |
+| IO_45 |  | sdio0_data1 |  | apbio_44 | fpgaio_34 |
+| IO_46 |  | sdio0_data2 |  | apbio_45 | fpgaio_35 |
+| IO_47 |  | apbio_50 | apbio_0 | apbio_46 | fpgaio_36 |
+| IO_48 |  | i2cm1_scl |  |  | fpgaio_38 |
+| IO_49 |  | i2cm1_sda |  |  | fpgaio_39 |
 
 
 
@@ -347,8 +336,8 @@ I/O function selection controls the select field of a mux that connects the I/O 
 | Field      |  Bits |  Type |    Default | Description     |
 | --------------------- |   --- |   --- |        --- | ------------------------- |
 | N_GPIO     | 23:16 |    RO |         32 | Number of IO connected to GPIO controller |
-| N_SYSIO    |  15:8 |    RO |          3 | Number of fixed-function IO |
-| N_IO       |   7:0 |    RO |         61 | Number of IO on device (not necessarily on package) |
+| N_SYSIO    |  15:8 |    RO |         23 | Number of fixed-function IO |
+| N_IO       |   7:0 |    RO |         50 | Number of IO on device (not necessarily on package) |
 
 ### IO_CFG1 offset = 0x0018
 
@@ -370,7 +359,7 @@ I/O function selection controls the select field of a mux that connects the I/O 
 
 | Field      |  Bits |  Type |    Default | Description     |
 | --------------------- |   --- |   --- |        --- | ------------------------- |
-| N_CAM      |  15:8 |    RO |          1 | Number of Camera controllers |
+| N_CAM      |  15:8 |    RO |          0 | Number of Camera controllers |
 | N_SDIO     |   7:0 |    RO |          1 | Number of SDIO controllers |
 
 ### JTAGREG offset = 0x0074
@@ -456,7 +445,7 @@ I/O function selection controls the select field of a mux that connects the I/O 
 ### SOFT_RESET offset = 0x00FC
 
 
-### IO_CTRL[61] offset = 0x0400
+### IO_CTRL[50] offset = 0x0400
 
 | Field      |  Bits |  Type |    Default | Description     |
 | --------------------- |   --- |   --- |        --- | ------------------------- |
