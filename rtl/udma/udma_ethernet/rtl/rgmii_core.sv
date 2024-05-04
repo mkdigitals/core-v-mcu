@@ -49,7 +49,6 @@ module rgmii_core #
     output wire        phy_tx_clk,
     output wire [3:0]  phy_txd,
     output wire        phy_tx_ctl,
-    output wire        phy_reset_n,
     input wire         phy_int_n,
     input wire         phy_pme_n,
     output wire        mac_gmii_tx_en,
@@ -87,8 +86,6 @@ module rgmii_core #
     output wire        rx_fifo_good_frame,
     output wire [1:0]  speed
 );
-
-assign phy_reset_n = !rst;
 
 eth_mac_1g_rgmii_fifo #(
     .TARGET(TARGET),
