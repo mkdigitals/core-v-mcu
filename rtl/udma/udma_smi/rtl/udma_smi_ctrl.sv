@@ -76,7 +76,7 @@ module udma_smi_ctrl #(
 	logic	[4:0]	data_count		= 5'h0;
 	logic	[15:0]	serializer		= 16'h0;
 
-	assign busy_o = state != ST_IDLE | start_i | ~rstn_i;
+	assign busy_o = state != ST_IDLE | start_i | ~rstn_i | start_reg;
 	assign nd_o	= nd_reg & ~nd_reg_d1;
 	always_ff @(posedge clk_i or negedge rstn_i) begin
 		if(!rstn_i)
@@ -96,7 +96,7 @@ module udma_smi_ctrl #(
 		begin
 			nd_reg_d1 <= nd_reg;
 
-			start_reg <= start_i ? 1'b1 : start_reg;
+			start_reg <= (start_i & state == ST_IDLE) ? 1'b1 : start_reg;
 
 			if(clk_en)
 			begin

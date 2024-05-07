@@ -94,20 +94,22 @@ module udma_smi_reg_if
         cfg_data_o = 32'h0;
 
         s_nd_clr = 1'b0;
-
-        case (s_rd_addr)
-        `SMI_REG_PHY_ND:
+        if (cfg_valid_i & cfg_rwn_i)
         begin
-            cfg_data_o[0] = {31'h0, nd_reg};
-            s_nd_clr = 1'b1;
+            case (s_rd_addr)
+            `SMI_REG_PHY_ND:
+            begin
+                cfg_data_o[0] = {31'h0, nd_reg};
+                s_nd_clr = 1'b1;
+            end
+            `SMI_REG_PHY_BUSY:
+                cfg_data_o[0] = {31'h0, busy_i};
+            `SMI_REG_RX_DATA:
+                cfg_data_o = {16'h0, rd_data_i};
+            default:
+                cfg_data_o = 'h0;
+            endcase
         end
-        `SMI_REG_PHY_BUSY:
-            cfg_data_o[0] = {31'h0, busy_i};
-        `SMI_REG_RX_DATA:
-            cfg_data_o = {16'h0, rd_data_i};
-        default:
-            cfg_data_o = 'h0;
-        endcase
     end
 
     assign cfg_ready_o  = 1'b1;
