@@ -37,7 +37,7 @@
 
 module util_mii_to_rmii #(
   parameter         INTF_CFG = 0,
-  parameter         RATE_10_100 = 0
+  parameter         RATE_10_100 = 1
 ) (
 
   // MAC to MII(PHY)

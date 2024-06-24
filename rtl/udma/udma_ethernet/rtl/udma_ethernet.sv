@@ -193,9 +193,9 @@ input  logic                      data_rx_ready_i
     assign data_rx_valid_o = rx_channel_enable ? rx_buffer_valid : 1'b0;
 
     assign rx_buffer_axis_tdata = eth_rx_axis_tdata;
-    assign rx_buffer_axis_tvalid = rx_queue_ready ? eth_rx_axis_tvalid : 1'b0;
-    assign rx_buffer_axis_tlast = eth_rx_axis_tlast;
-    assign rx_buffer_axis_tuser = eth_rx_axis_tvalid;
+    assign rx_buffer_axis_tvalid = s_eth_en_rx & rx_queue_ready ? eth_rx_axis_tvalid : 1'b0;
+    assign rx_buffer_axis_tlast = s_eth_en_rx ? eth_rx_axis_tlast : 1'b0;
+    assign rx_buffer_axis_tuser = s_eth_en_rx ? eth_rx_axis_tuser : 1'b0;
     assign eth_rx_axis_tready   = rx_queue_ready ? rx_buffer_axis_tready : 1'b0;
 
     //CONFIGURATION

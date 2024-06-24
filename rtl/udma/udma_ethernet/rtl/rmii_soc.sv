@@ -234,7 +234,7 @@ core_inst (
 
 util_mii_to_rmii #(
   .INTF_CFG(0),
-  .RATE_10_100(1)
+  .RATE_10_100(0)
 ) 
 mii_2_rmii_inst
 (

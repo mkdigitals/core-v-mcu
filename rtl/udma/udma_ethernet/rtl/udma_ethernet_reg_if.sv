@@ -304,13 +304,25 @@ module udma_ethernet_reg_if #(
 
         case (s_rd_addr)
         `ETH_REG_RX_SADDR_0:
-            cfg_data_o <= r_rx_startaddr0    <= cfg_data_i[L2_AWIDTH_NOAL-1:0];
+        begin    
+            cfg_data_o[31 : L2_AWIDTH_NOAL] <= 0;
+            cfg_data_o[L2_AWIDTH_NOAL-1:0] <= r_rx_startaddr0;
+        end
         `ETH_REG_RX_SADDR_1:
-            cfg_data_o <= r_rx_startaddr1    <= cfg_data_i[L2_AWIDTH_NOAL-1:0];
+        begin
+            cfg_data_o[31 : L2_AWIDTH_NOAL] <= 0;
+            cfg_data_o[L2_AWIDTH_NOAL-1:0] <= r_rx_startaddr1;
+        end
         `ETH_REG_RX_SADDR_2:
-            cfg_data_o <= r_rx_startaddr2    <= cfg_data_i[L2_AWIDTH_NOAL-1:0];
+        begin
+            cfg_data_o[31 : L2_AWIDTH_NOAL] <= 0;
+            cfg_data_o[L2_AWIDTH_NOAL-1:0] <= r_rx_startaddr2;
+        end
         `ETH_REG_RX_SADDR_3:
-            cfg_data_o <= r_rx_startaddr3    <= cfg_data_i[L2_AWIDTH_NOAL-1:0];
+        begin
+            cfg_data_o[31 : L2_AWIDTH_NOAL] <= 0;
+            cfg_data_o[L2_AWIDTH_NOAL-1:0] <= r_rx_startaddr3;
+        end 
         `ETH_REG_RX_DESC_0:
             cfg_data_o <= r_rx_desc_0;
         `ETH_REG_RX_DESC_1:
@@ -320,21 +332,21 @@ module udma_ethernet_reg_if #(
         `ETH_REG_RX_DESC_3:
             cfg_data_o <= r_rx_desc_3;
         `ETH_REG_RX_CADDR:
-            cfg_data_o = cfg_rx_curr_addr_i;
+            cfg_data_o <= cfg_rx_curr_addr_i;
         `ETH_REG_RX_SIZE:
-            cfg_data_o[TRANS_SIZE-1:0] = cfg_rx_bytes_left_i;
+            cfg_data_o[TRANS_SIZE-1:0] <= cfg_rx_bytes_left_i;
         `ETH_REG_RX_CFG:
-            cfg_data_o = {26'h0,cfg_rx_pending_i,cfg_rx_en_i,3'h0,r_rx_continuous};
+            cfg_data_o <= {26'h0,cfg_rx_pending_i,cfg_rx_en_i,3'h0,r_rx_continuous};
         `ETH_REG_TX_SADDR:
-            cfg_data_o = cfg_tx_curr_addr_i;
+            cfg_data_o <= cfg_tx_curr_addr_i;
         `ETH_REG_TX_SIZE:
             cfg_data_o[TRANS_SIZE-1:0] = cfg_tx_bytes_left_i;
         `ETH_REG_TX_CFG:
-            cfg_data_o = {26'h0,cfg_tx_pending_i,cfg_tx_en_i,3'h0,r_tx_continuous};
+            cfg_data_o <= {26'h0,cfg_tx_pending_i,cfg_tx_en_i,3'h0,r_tx_continuous};
         `ETH_REG_ETH_SETUP:
-            cfg_data_o = {22'h0, r_eth_en_rx, r_eth_en_tx, 8'h0};
+            cfg_data_o <= {22'h0, r_eth_en_rx, r_eth_en_tx, 8'h0};
         `ETH_REG_STATUS:
-            cfg_data_o = {21'h0,tx_busy_i ,speed_i[1:0], status_i[7:0]};
+            cfg_data_o <= {21'h0,tx_busy_i ,speed_i[1:0], status_i[7:0]};
         `ETH_REG_ERROR:
          begin
             cfg_data_o = {26'h0,r_err_tx_fifo_overflow,
